@@ -1,8 +1,25 @@
-# Quant Dev Assignment  Shikher Jha
+# Quant Trading System
 
-Hi, this is my submission for the Quant Developer Intern assessment.
+This is a personal project that grew out of a Quant Developer Intern assessment. It is my return to Python and my first serious dive into building trading systems that are easy to reason about and audit. It is an evolving project and this is the first implementation.
+I was not chasing a magic signal. I built this to prove system correctness, determinism, and parity between backtest and live execution. If the strategy thinks a position should exist in backtest it will make the same decision in live trading.
 
-Since this is my first real project in the quant space (and my return to Python after a while), I focused heavily on the engineering side making sure the code is modular, runs without crashing, and most importantly, that the live trading matches the backtest exactly.
+## Philosophy
+Most trading projects fail not because the indicator is bad but because backtest logic and live logic drift apart over time. This repo flips that on its head.
+
+The live bot is not a separate system. The live bot is the backtester running continuously on rolling market data. That design choice is the guardrail for everything else in the code base.
+
+## High Level Overview
+1. Rule based strategy that is easy to inspect and debug
+
+2. Identical logic path for backtest and live execution
+
+3. Explicit state sync model instead of separate signal layers
+
+4. Clean separation between logic, simulation, and execution
+
+5. Deterministic and debuggable by design
+
+Reliability and auditability were the objective, not instant profits.
 
 ## Project Structure
 
@@ -18,7 +35,7 @@ I tried to keep the code clean, followed the same structure as given in the assi
 
 ## My Strategy (The "Why")
 
-I’ll be honest I didn't focus on creating a complex money-printing machine. I wanted a strategy that was easy to debug so I could prove the infrastructure works.
+I’ll be honest I didn't focus on creating a complex moneyprinting machine. I wanted a strategy that was easy to debug so I could prove the infrastructure works.
 
 **Initial Idea:** I started with a simple SMA crossover. It was too laggy and didn't trigger enough trades for testing.
 
@@ -75,6 +92,4 @@ python m src.trading.executor
 
 **Logs:** You can see in the logs that it successfully syncs the wallet (e.g., seeing 0 balance and matching it with 0 target position).
 
-## Conclusion
 
-This assessment was a great learning experience. It forced me to think about system reliability rather than just staring at charts. The code is structured in a way that I can easily swap out the strategy file for something more complex later on without breaking the execution logic.
