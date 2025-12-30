@@ -1,0 +1,7 @@
+pandas
+numpy
+backtesting
+python-dotenv
+python-binance
+backtesting
+TA-lib
